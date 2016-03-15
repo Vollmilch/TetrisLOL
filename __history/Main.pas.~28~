@@ -755,14 +755,13 @@ begin
 
   // new_game
   imgFirst.Parent.DoubleBuffered := True;
-  imgSecond.Parent.DoubleBuffered := True;
+  imgFirst.Parent.DoubleBuffered := True;
 end;
 
 procedure TForm1.Action1Execute(Sender: TObject);
 begin
   //einspielermod
   Form1.Width :=  pnlNextFigure.Left + pnlNextFigure.Width + 15;
-  //panels unsichtbar
   pnlNextFigureSecond.Visible := False;
   pnlSecond.Visible := False;
   newgame(False);
@@ -770,9 +769,6 @@ end;
 
 procedure TForm1.Action2Execute(Sender: TObject);
 begin
-  //panels sichtbar
-  pnlNextFigureSecond.Visible := True;
-  pnlSecond.Visible := True;
   // fuer zwei Spieler
   Form1.Width := pnlNextFigure.Left + pnlNextFigure.Width + 15 + pnlFirst.Width + 7;
     //Tetris Zwei

@@ -770,7 +770,7 @@ end;
 
 procedure TForm1.Action2Execute(Sender: TObject);
 begin
-  //panels sichtbar
+  //sichtbar
   pnlNextFigureSecond.Visible := True;
   pnlSecond.Visible := True;
   // fuer zwei Spieler

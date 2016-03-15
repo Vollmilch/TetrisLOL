@@ -102,15 +102,14 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 476
-    Height = 22
+    Height = 36
     AutoSize = True
-    ButtonWidth = 85
+    ButtonHeight = 36
+    ButtonWidth = 65
     Caption = 'ToolBar1'
     Images = ImageList1
-    List = True
     ShowCaptions = True
     TabOrder = 4
-    Wrapable = False
     object ToolButton2: TToolButton
       Left = 0
       Top = 0
@@ -119,14 +118,14 @@ object Form1: TForm1
       ImageIndex = 1
     end
     object ToolButton3: TToolButton
-      Left = 85
+      Left = 65
       Top = 0
       Action = Action2
       Caption = 'Mehrspieler'
       ImageIndex = 2
     end
     object ToolButton1: TToolButton
-      Left = 170
+      Left = 130
       Top = 0
       Action = DateiFileExit1
       Caption = 'Beenden'
