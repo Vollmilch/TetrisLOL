@@ -31,6 +31,7 @@ type
     ToolButton3: TToolButton;
     Action1: TAction;
     Action2: TAction;
+    pnlSightBlock: TPanel;
     procedure mnuNewClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
@@ -756,10 +757,18 @@ begin
   // new_game
   imgFirst.Parent.DoubleBuffered := True;
   imgSecond.Parent.DoubleBuffered := True;
+
+  //cant see buggy entities at start
+  pnlSightBlock.Visible := True;
+  pnlSightBlock.Align := alClient;
+  // TODO: put buttons for customization on the panel
 end;
 
 procedure TForm1.Action1Execute(Sender: TObject);
 begin
+  Label1.Visible := True;
+  Label2.Visible := True;
+  pnlSightBlock.Visible := False;
   //einspielermod
   Form1.Width :=  pnlNextFigure.Left + pnlNextFigure.Width + 15;
   //panels unsichtbar
@@ -770,6 +779,9 @@ end;
 
 procedure TForm1.Action2Execute(Sender: TObject);
 begin
+  Label1.Visible := True;
+  Label2.Visible := True;
+  pnlSightBlock.Visible := False;
   //panels sichtbar
   pnlNextFigureSecond.Visible := True;
   pnlSecond.Visible := True;

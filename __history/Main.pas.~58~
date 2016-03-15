@@ -31,6 +31,7 @@ type
     ToolButton3: TToolButton;
     Action1: TAction;
     Action2: TAction;
+    pnlSightBlock: TPanel;
     procedure mnuNewClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
@@ -756,13 +757,17 @@ begin
   // new_game
   imgFirst.Parent.DoubleBuffered := True;
   imgSecond.Parent.DoubleBuffered := True;
+
+  //cant see buggy entities at start
+  pnlSightBlock.Visible := True;
+  pnlSightBlock.Align := alClient;
 end;
 
 procedure TForm1.Action1Execute(Sender: TObject);
 begin
   //einspielermod
   Form1.Width :=  pnlNextFigure.Left + pnlNextFigure.Width + 15;
-  //unsichtbar
+  //panels unsichtbar
   pnlNextFigureSecond.Visible := False;
   pnlSecond.Visible := False;
   newgame(False);
@@ -770,7 +775,7 @@ end;
 
 procedure TForm1.Action2Execute(Sender: TObject);
 begin
-  //sichtbar
+  //panels sichtbar
   pnlNextFigureSecond.Visible := True;
   pnlSecond.Visible := True;
   // fuer zwei Spieler
