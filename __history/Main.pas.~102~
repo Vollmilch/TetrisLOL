@@ -40,7 +40,8 @@ type
     procedure mnuExitClick(Sender: TObject);
     procedure Action1Execute(Sender: TObject);
     procedure Action2Execute(Sender: TObject);
-    procedure InitStartPanel;
+    procedure initStartPanel;
+    procedure FormResize(Sender: TObject);
 
       private
     { Private declarations }
@@ -126,8 +127,11 @@ const
    )
   );
 
-  colors : Array [1..12] of Integer = (clAqua, clBlue, clFuchsia, clGreen,
-  clLime, clMaroon, clNavy, clOlive, clPurple, clRed, clTeal, clYellow);
+//  colors : Array [1..12] of Integer = (clAqua, clBlue, clFuchsia, clGreen,
+//  clLime, clMaroon, clNavy, clOlive, clPurple, clRed, clTeal, clYellow);     //(clWebLemonChiffon, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
+
+  colors : Array [1..12] of Integer = (clAqua, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
+  clWebLime, clWebIndianRed, clWebMidnightBlue, clWebOliveDrab, clWebBlueViolet, clWebTomato, clWebDarkCyan, clWebGold);
 
   stkw = 10;           //      stakanbreite
   stkh = 20;           //      stakanhöhe
@@ -187,7 +191,7 @@ begin
     LineTo(x+ sqrs,y);
     MoveTo(x,y);
     LineTo(x,y + sqrs);
-    Pen.Color := clWhite;
+    Pen.Color := clSkyBlue;
     MoveTo(x+1,y+1);
     LineTo(x+sqrs-2,y+1);
     MoveTo(x+1,y+1);
@@ -691,10 +695,16 @@ begin
   //second Player Controls
   case Char(Key) of
     'A': if Timer1.Enabled and canmoveleft(True) then moveleft(True);
-    'W': if Timer1.Enabled and canrotate(True) then rotatefigure(True);  
-    'D': if Timer1.Enabled and canmoveright(True) then moveright(True);  
+    'W': if Timer1.Enabled and canrotate(True) then rotatefigure(True);
+    'D': if Timer1.Enabled and canmoveright(True) then moveright(True);
     'S': if Timer1.Enabled and canmovedown(True) then movedown(True) else stopmove(True);   
   end;
+end;
+
+procedure TForm1.FormResize(Sender: TObject);
+begin
+  // fix "small window" bug
+  Repaint;
 end;
 
 procedure TForm1.mnuNewClick(Sender: TObject);
@@ -765,7 +775,7 @@ begin
   // TODO: put buttons for customization on the panel
 end;
 
-procedure TForm1.InitStartPanel;
+procedure TForm1.initStartPanel;
 begin
   Label1.Visible := True;
   Label2.Visible := True;

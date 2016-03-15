@@ -127,8 +127,11 @@ const
    )
   );
 
-  colors : Array [1..12] of Integer = (clAqua, clBlue, clFuchsia, clGreen,
-  clLime, clMaroon, clNavy, clOlive, clPurple, clRed, clTeal, clYellow);
+//  colors : Array [1..12] of Integer = (clAqua, clBlue, clFuchsia, clGreen,
+//  clLime, clMaroon, clNavy, clOlive, clPurple, clRed, clTeal, clYellow);     //(clWebLemonChiffon, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
+
+  colors : Array [1..12] of Integer = (clWebLightSkyBlue, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
+  clWebLavender, clWebIndianRed, clWebMidnightBlue, clWebOliveDrab, clWebBlueViolet, clWebTomato, clWebDarkCyan, clWebGold);
 
   stkw = 10;           //      stakanbreite
   stkh = 20;           //      stakanhöhe
@@ -188,7 +191,7 @@ begin
     LineTo(x+ sqrs,y);
     MoveTo(x,y);
     LineTo(x,y + sqrs);
-    Pen.Color := clWhite;
+    Pen.Color := clWebWhiteSmoke;    //TODO: richtige Farbe fuer den Rand
     MoveTo(x+1,y+1);
     LineTo(x+sqrs-2,y+1);
     MoveTo(x+1,y+1);
