@@ -40,6 +40,7 @@ type
     procedure mnuExitClick(Sender: TObject);
     procedure Action1Execute(Sender: TObject);
     procedure Action2Execute(Sender: TObject);
+    procedure InitStartPanel;
 
       private
     { Private declarations }
@@ -761,13 +762,19 @@ begin
   //cant see buggy entities at start
   pnlSightBlock.Visible := True;
   pnlSightBlock.Align := alClient;
-  label1.Visible = False;
-  label2.Visible := False;
+  // TODO: put buttons for customization on the panel
+end;
+
+procedure TForm1.InitStartPanel;
+begin
+  Label1.Visible := True;
+  Label2.Visible := True;
+  pnlSightBlock.Visible := False;
 end;
 
 procedure TForm1.Action1Execute(Sender: TObject);
 begin
-  pnlSightBlock.Visible := False;
+
   //einspielermod
   Form1.Width :=  pnlNextFigure.Left + pnlNextFigure.Width + 15;
   //panels unsichtbar
@@ -778,6 +785,8 @@ end;
 
 procedure TForm1.Action2Execute(Sender: TObject);
 begin
+  Label1.Visible := True;
+  Label2.Visible := True;
   pnlSightBlock.Visible := False;
   //panels sichtbar
   pnlNextFigureSecond.Visible := True;

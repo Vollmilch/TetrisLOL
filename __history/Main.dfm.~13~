@@ -14,6 +14,7 @@ object Form1: TForm1
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
@@ -25,6 +26,7 @@ object Form1: TForm1
     Height = 17
     AutoSize = False
     Caption = 'Caption 1'
+    Visible = False
   end
   object Label2: TLabel
     Left = 379
@@ -33,6 +35,7 @@ object Form1: TForm1
     Height = 17
     AutoSize = False
     Caption = 'Caption 2'
+    Visible = False
   end
   object Label3: TLabel
     Left = 376
@@ -102,14 +105,15 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 476
-    Height = 36
+    Height = 22
     AutoSize = True
-    ButtonHeight = 36
-    ButtonWidth = 65
+    ButtonWidth = 85
     Caption = 'ToolBar1'
     Images = ImageList1
+    List = True
     ShowCaptions = True
     TabOrder = 4
+    Wrapable = False
     object ToolButton2: TToolButton
       Left = 0
       Top = 0
@@ -118,20 +122,29 @@ object Form1: TForm1
       ImageIndex = 1
     end
     object ToolButton3: TToolButton
-      Left = 65
+      Left = 85
       Top = 0
       Action = Action2
       Caption = 'Mehrspieler'
       ImageIndex = 2
     end
     object ToolButton1: TToolButton
-      Left = 130
+      Left = 170
       Top = 0
       Action = DateiFileExit1
       Caption = 'Beenden'
       ParentShowHint = False
       ShowHint = False
     end
+  end
+  object pnlSightBlock: TPanel
+    Left = 267
+    Top = 367
+    Width = 185
+    Height = 41
+    BorderStyle = bsSingle
+    TabOrder = 5
+    Visible = False
   end
   object Timer1: TTimer
     Interval = 500
@@ -142,8 +155,8 @@ object Form1: TForm1
   object Timer2: TTimer
     Interval = 500
     OnTimer = Timer2Timer
-    Left = 248
-    Top = 360
+    Left = 296
+    Top = 304
   end
   object ActionList1: TActionList
     Images = ImageList1
@@ -167,10 +180,10 @@ object Form1: TForm1
     end
   end
   object ImageList1: TImageList
-    Left = 160
-    Top = 304
+    Left = 88
+    Top = 352
     Bitmap = {
-      494C010103000800380010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000800400010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000008686860086868600868686008686
       8600868686008686860086868600868686008686860086868600FFFFFF00C0C0

@@ -1,0 +1,18 @@
+program Tetris;
+
+uses
+  Forms,
+  Main in 'Main.pas' {Form1},
+ // Vcl.Themes,
+ // Vcl.Styles;
+
+{$R *.RES}
+
+begin
+  Application.Initialize;
+  //TStyleManager.TrySetStyle('Aqua Graphite');
+  //Application.Title := 'Titles';
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
+end.

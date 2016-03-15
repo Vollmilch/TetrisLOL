@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.824,D:\ISHODNIKI\tetrislol\Unit1.pas=D:\ISHODNIKI\tetrislol\TTetromino.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.434,D:\ISHODNIKI\tetrislol\TTetromino.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.891,D:\ISHODNIKI\tetris2002\About.pas=</Transaction>
-    <Transaction>2016.03.14 21:52:02.439,=D:\ISHODNIKI\tetrislol\Unit1.pas</Transaction>
-    <Transaction>2016.03.14 21:53:18.824,D:\ISHODNIKI\tetrislol\TTetromino.pas=D:\ISHODNIKI\tetrislol\Unit1.pas</Transaction>
-    <Transaction>2016.03.14 23:22:50.434,D:\ISHODNIKI\tetrislol\TTetromino.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.439,=D:\ISHODNIKI\tetrislol\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

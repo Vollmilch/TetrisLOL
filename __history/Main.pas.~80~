@@ -40,6 +40,8 @@ type
     procedure mnuExitClick(Sender: TObject);
     procedure Action1Execute(Sender: TObject);
     procedure Action2Execute(Sender: TObject);
+    procedure initStartPanel;
+    procedure FormResize(Sender: TObject);
 
       private
     { Private declarations }
@@ -690,10 +692,15 @@ begin
   //second Player Controls
   case Char(Key) of
     'A': if Timer1.Enabled and canmoveleft(True) then moveleft(True);
-    'W': if Timer1.Enabled and canrotate(True) then rotatefigure(True);  
-    'D': if Timer1.Enabled and canmoveright(True) then moveright(True);  
+    'W': if Timer1.Enabled and canrotate(True) then rotatefigure(True);
+    'D': if Timer1.Enabled and canmoveright(True) then moveright(True);
     'S': if Timer1.Enabled and canmovedown(True) then movedown(True) else stopmove(True);   
   end;
+end;
+
+procedure TForm1.FormResize(Sender: TObject);
+begin
+  Repaint;
 end;
 
 procedure TForm1.mnuNewClick(Sender: TObject);
@@ -761,13 +768,19 @@ begin
   //cant see buggy entities at start
   pnlSightBlock.Visible := True;
   pnlSightBlock.Align := alClient;
+  // TODO: put buttons for customization on the panel
+end;
+
+procedure TForm1.initStartPanel;
+begin
+  Label1.Visible := True;
+  Label2.Visible := True;
+  pnlSightBlock.Visible := False;
 end;
 
 procedure TForm1.Action1Execute(Sender: TObject);
 begin
-  Label1.Visible := True;
-  Label1.Visible := True;
-  pnlSightBlock.Visible := False;
+  initStartPanel;
   //einspielermod
   Form1.Width :=  pnlNextFigure.Left + pnlNextFigure.Width + 15;
   //panels unsichtbar
@@ -778,7 +791,7 @@ end;
 
 procedure TForm1.Action2Execute(Sender: TObject);
 begin
-  pnlSightBlock.Visible := False;
+  initStartPanel;
   //panels sichtbar
   pnlNextFigureSecond.Visible := True;
   pnlSecond.Visible := True;
