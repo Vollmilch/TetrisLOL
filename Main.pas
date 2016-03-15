@@ -4,15 +4,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Menus, ExtCtrls, StdCtrls, Registry;
+  Menus, ExtCtrls, StdCtrls, Registry, Vcl.ImgList, Vcl.ToolWin, Vcl.ComCtrls,
+  System.Actions, Vcl.ActnList, Vcl.StdActns;
 
 type
   TForm1 = class(TForm)
-    MainMenu1: TMainMenu;
-    mnuGame: TMenuItem;
-    mnuNew: TMenuItem;
-    mnuS1: TMenuItem;
-    mnuExit: TMenuItem;
     Timer1: TTimer;
     Label1: TLabel;
     pnlFirst: TPanel;
@@ -26,13 +22,27 @@ type
     pnlNextFigureSecond: TPanel;
     imgNextFigureSecond: TImage;
     Timer2: TTimer;
+    ActionList1: TActionList;
+    ToolBar1: TToolBar;
+    ImageList1: TImageList;
+    DateiFileExit1: TFileExit;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButton3: TToolButton;
+    Action1: TAction;
+    Action2: TAction;
     procedure mnuNewClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure mnuExitClick(Sender: TObject);
-  private
+    procedure Action1Execute(Sender: TObject);
+    procedure Action2Execute(Sender: TObject);
+
+
+
+      private
     { Private declarations }
   public
     { Public declarations }
@@ -710,7 +720,6 @@ begin
   if canmovedown(True) then movedown(True) else stopmove(True);
 end;
 
-
 procedure TForm1.FormCreate(Sender: TObject);
 var mh : String;
 begin
@@ -775,7 +784,21 @@ begin
 
   // new_game
   imgFirst.Parent.DoubleBuffered := True;
-  newgame(True); // True = 2 Spieler 
+  newgame(True); // True = 2 Spieler
+end;
+
+procedure TForm1.Action1Execute(Sender: TObject);
+begin
+
+  newgame(False);
+
+end;
+
+procedure TForm1.Action2Execute(Sender: TObject);
+begin
+
+  newgame(True);
+
 end;
 
 procedure TForm1.mnuExitClick(Sender: TObject);
