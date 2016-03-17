@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 192
-  Top = 107
+  Left = 206
+  Top = 77
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Tetris'
-  ClientHeight = 432
-  ClientWidth = 476
+  ClientHeight = 721
+  ClientWidth = 1119
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,32 +17,104 @@ object Form1: TForm1
   Position = poScreenCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
-    Left = 379
-    Top = 177
-    Width = 65
-    Height = 17
-    AutoSize = False
+  object lblPlayer1Score: TLabel
+    Left = 320
+    Top = 170
+    Width = 67
+    Height = 19
     Caption = 'Caption 1'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Impact'
+    Font.Style = [fsBold]
+    ParentFont = False
     Visible = False
   end
-  object Label2: TLabel
-    Left = 379
-    Top = 200
-    Width = 89
-    Height = 17
-    AutoSize = False
+  object lblPlayer1Level: TLabel
+    Left = 320
+    Top = 190
+    Width = 69
+    Height = 19
     Caption = 'Caption 2'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Impact'
+    Font.Style = [fsBold]
+    ParentFont = False
     Visible = False
   end
-  object Label3: TLabel
-    Left = 376
-    Top = 214
-    Width = 77
-    Height = 17
-    AutoSize = False
+  object lblPause: TLabel
+    Left = 320
+    Top = 210
+    Width = 4
+    Height = 19
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Impact'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblPlayer1Name: TLabel
+    Left = 320
+    Top = 150
+    Width = 86
+    Height = 19
+    Caption = 'PlayerName'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Impact'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Visible = False
+  end
+  object lblPlayer2Score: TLabel
+    Left = 320
+    Top = 387
+    Width = 67
+    Height = 19
+    Caption = 'Caption 1'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Impact'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Visible = False
+  end
+  object lblPlayer2Level: TLabel
+    Left = 320
+    Top = 407
+    Width = 69
+    Height = 19
+    Caption = 'Caption 2'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Impact'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Visible = False
+  end
+  object lblPlayer2Name: TLabel
+    Left = 320
+    Top = 367
+    Width = 86
+    Height = 19
+    Caption = 'PlayerName'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Impact'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Visible = False
   end
   object pnlFirst: TPanel
     Left = 8
@@ -89,7 +161,7 @@ object Form1: TForm1
   end
   object pnlNextFigureSecond: TPanel
     Left = 379
-    Top = 231
+    Top = 250
     Width = 89
     Height = 89
     BevelInner = bvLowered
@@ -104,7 +176,7 @@ object Form1: TForm1
   object ToolBar1: TToolBar
     Left = 0
     Top = 0
-    Width = 476
+    Width = 1119
     Height = 22
     AutoSize = True
     ButtonWidth = 85
@@ -138,25 +210,126 @@ object Form1: TForm1
     end
   end
   object pnlSightBlock: TPanel
-    Left = 267
-    Top = 367
-    Width = 185
-    Height = 41
+    Left = 511
+    Top = 48
+    Width = 554
+    Height = 346
+    Align = alCustom
     BorderStyle = bsSingle
     TabOrder = 5
     Visible = False
+    OnAlignPosition = pnlSightBlockAlignPosition
+    object lblCustomize: TLabel
+      AlignWithMargins = True
+      Left = 136
+      Top = 51
+      Width = 313
+      Height = 20
+      Margins.Left = 135
+      Margins.Top = 50
+      Margins.Right = 100
+      Margins.Bottom = 5
+      Align = alTop
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Impact'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitWidth = 4
+    end
+    object pnlParentContainer: TPanel
+      Left = 57
+      Top = -2
+      Width = 375
+      Height = 344
+      Align = alCustom
+      TabOrder = 0
+      object lblCustomHeight: TLabel
+        Left = 114
+        Top = 79
+        Width = 76
+        Height = 15
+        Caption = 'CustomHeight'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Impact'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lblCustomWidth: TLabel
+        Left = 114
+        Top = 155
+        Width = 71
+        Height = 15
+        Margins.Left = 1
+        Caption = 'CustomWidth'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Impact'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lblCustomSqrSize: TLabel
+        Left = 114
+        Top = 222
+        Width = 82
+        Height = 15
+        Caption = 'CustomSqrSize'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Impact'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object scrlbrHeight: TScrollBar
+        Left = 114
+        Top = 250
+        Width = 127
+        Height = 32
+        Margins.Top = 15
+        Margins.Bottom = 15
+        Align = alCustom
+        PageSize = 0
+        TabOrder = 0
+      end
+      object scrlbrSQRS: TScrollBar
+        Left = 114
+        Top = 105
+        Width = 127
+        Height = 32
+        Margins.Top = 15
+        Margins.Bottom = 15
+        Align = alCustom
+        PageSize = 0
+        TabOrder = 1
+        OnChange = scrlbrSQRSChange
+      end
+      object scrlbrWidth: TScrollBar
+        Left = 114
+        Top = 185
+        Width = 127
+        Height = 31
+        Align = alCustom
+        PageSize = 0
+        TabOrder = 2
+      end
+    end
   end
   object Timer1: TTimer
     Interval = 500
     OnTimer = Timer1Timer
-    Left = 248
-    Top = 304
+    Left = 136
+    Top = 312
   end
   object Timer2: TTimer
     Interval = 500
     OnTimer = Timer2Timer
-    Left = 296
-    Top = 304
+    Left = 136
+    Top = 352
   end
   object ActionList1: TActionList
     Images = ImageList1
@@ -183,7 +356,7 @@ object Form1: TForm1
     Left = 88
     Top = 352
     Bitmap = {
-      494C010103000800400010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101030008004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000008686860086868600868686008686
       8600868686008686860086868600868686008686860086868600FFFFFF00C0C0
@@ -321,5 +494,11 @@ object Form1: TForm1
       E007000000000000FFFF000000000000F81F000000000000F81F000000000000
       F81F000000000000FFFF00000000000000000000000000000000000000000000
       000000000000}
+  end
+  object tmrButton: TTimer
+    Interval = 500
+    OnTimer = tmrButtonTimer
+    Left = 176
+    Top = 312
   end
 end

@@ -5,18 +5,18 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   Menus, ExtCtrls, StdCtrls, Registry, Vcl.ImgList, Vcl.ToolWin, Vcl.ComCtrls,
-  System.Actions, Vcl.ActnList, Vcl.StdActns;
+  System.Actions, Vcl.ActnList, Vcl.StdActns, System.Generics.Collections
+  , splash;
 
 type
   TForm1 = class(TForm)
     Timer1: TTimer;
-    Label1: TLabel;
+    lblPlayer1Score: TLabel;
     pnlFirst: TPanel;
     imgFirst: TImage;
     pnlNextFigure: TPanel;
     imgNextFigure: TImage;
-    Label2: TLabel;
-    Label3: TLabel;
+    lblPlayer1Level: TLabel;
     pnlSecond: TPanel;
     imgSecond: TImage;
     pnlNextFigureSecond: TPanel;
@@ -32,9 +32,24 @@ type
     Action1: TAction;
     Action2: TAction;
     pnlSightBlock: TPanel;
+    scrlbrSQRS: TScrollBar;
+    scrlbrHeight: TScrollBar;
+    scrlbrWidth: TScrollBar;
+    pnlParentContainer: TPanel;
+    lblCustomize: TLabel;
+    lblCustomHeight: TLabel;
+    lblCustomWidth: TLabel;
+    lblCustomSqrSize: TLabel;
+    lblPause: TLabel;
+    tmrButton: TTimer;
+    lblPlayer1Name: TLabel;
+    lblPlayer2Score: TLabel;
+    lblPlayer2Level: TLabel;
+    lblPlayer2Name: TLabel;
     procedure mnuNewClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
+    procedure tmrButtonTimer(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure mnuExitClick(Sender: TObject);
@@ -42,6 +57,11 @@ type
     procedure Action2Execute(Sender: TObject);
     procedure initStartPanel;
     procedure FormResize(Sender: TObject);
+    procedure pnlSightBlockAlignPosition(Sender: TWinControl; Control: TControl;
+      var NewLeft, NewTop, NewWidth, NewHeight: Integer; var AlignRect: TRect;
+      AlignInfo: TAlignInfo);
+    procedure scrlbrSQRSChange(Sender: TObject);
+    procedure goSplashScreen;
 
       private
     { Private declarations }
@@ -130,8 +150,8 @@ const
 //  colors : Array [1..12] of Integer = (clAqua, clBlue, clFuchsia, clGreen,
 //  clLime, clMaroon, clNavy, clOlive, clPurple, clRed, clTeal, clYellow);     //(clWebLemonChiffon, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
 
-  colors : Array [1..12] of Integer = (clAqua, clBlue, clWebOrchid, clWebLimeGreen,
-  clWebLime, clWebIndianRed, clWebMidnightBlue, clWebOliveDrab, clWebBlueViolet, clWebTomato, clWebDarkCyan, clWebYellow);
+  colors : Array [1..12] of Integer = (clWebLightSkyBlue, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
+  clWebLavender, clWebIndianRed, clWebMidnightBlue, clWebOliveDrab, clWebBlueViolet, clWebTomato, clWebDarkCyan, clWebGold);
 
   stkw = 10;           //      stakanbreite
   stkh = 20;           //      stakanhöhe
@@ -157,7 +177,7 @@ var
   var_stakan : Array [-3..stkh, 1..stkw] of Integer;
   //reg
   reg : TRegistry;
-
+  clickedStart: Boolean;
 
 implementation
 
@@ -167,11 +187,12 @@ procedure setspeed(s : Integer; aSecond: Boolean = False);
 begin
   if aSecond then
   begin
+    Form1.lblPlayer2Level.Caption := 'Level  : ' + IntToStr(s);
     Form1.Timer2.Interval := 500 - (s-1) * 100; //game-speed
   end
   else
   begin
-    Form1.Label2.Caption := 'Level  : ' + IntToStr(s);
+    Form1.lblPlayer1Level.Caption := 'Level  : ' + IntToStr(s);
     Form1.Timer1.Interval := 500 - (s-1) * 100;
   end;
 end;
@@ -191,7 +212,7 @@ begin
     LineTo(x+ sqrs,y);
     MoveTo(x,y);
     LineTo(x,y + sqrs);
-    Pen.Color := clSkyBlue;
+    Pen.Color := clWebWhiteSmoke;    //TODO: richtige Farbe fuer den Rand
     MoveTo(x+1,y+1);
     LineTo(x+sqrs-2,y+1);
     MoveTo(x+1,y+1);
@@ -397,13 +418,13 @@ begin
   Form1.imgFirst.Canvas.Brush.Color := clGray;
   Form1.imgFirst.Canvas.FillRect(Bounds(0,0,sqrs*stkw,sqrs*stkh));  //sqrs * x = h
   scores := 0;
-  Form1.Label1.Caption := 'Score: ' + IntToStr(scores);
+  Form1.lblPlayer1Score.Caption := 'Score: ' + IntToStr(scores);
   setspeed(1); //first
   randomize;
   gennextfigure;
   nextfigure;
   showfigure;
-  Form1.Label3.Caption := '';
+  Form1.lblPause.Caption := '';
   Form1.Timer1.Enabled := True;
 
   if aSecond then
@@ -415,6 +436,7 @@ begin
     Form1.imgSecond.Canvas.Brush.Color := clGray;
     Form1.imgSecond.Canvas.FillRect(Bounds(0,0,sqrs*stkw,sqrs*stkh));  //sqrs * x = h
     var_scores := 0;
+    Form1.lblPlayer2Score.Caption := 'Score: ' + IntToStr(var_scores);
     setspeed(1, true); //second
     //second process
     randomize;
@@ -535,11 +557,11 @@ begin
     end;
     //Scores einstellen
     scores := scores + l * 10;
-    if (scores >= 300)  and (scores < 1000)  then setspeed(2);
-    if (scores >= 1000) and (scores < 3000)  then setspeed(3);
-    if (scores >= 3000) and (scores < 10000) then setspeed(4);
-    if (scores >= 10000) then setspeed(5);
-    Form1.Label1.Caption := 'Score: '+IntToStr(scores);
+    if (scores >= 300)  and (scores < 1000)  then setspeed(2, True);
+    if (scores >= 1000) and (scores < 3000)  then setspeed(3, True);
+    if (scores >= 3000) and (scores < 10000) then setspeed(4, True);
+    if (scores >= 10000) then setspeed(5, True);
+    Form1.lblPlayer1Score.Caption := 'Score: '+IntToStr(scores);
   end;
 
   if aSecond then
@@ -567,13 +589,13 @@ begin
           end;
         end;
       end;
-      //Scores einstellen Spieler 2
-  //    scores := scores + l * 10;
-  //    if (scores >= 300)  and (scores < 1000)  then setspeed(2);
-  //    if (scores >= 1000) and (scores < 3000)  then setspeed(3);
-  //    if (scores >= 3000) and (scores < 10000) then setspeed(4);
-  //    if (scores >= 10000) then setspeed(5);
-  //    Form1.Label1.Caption := 'Score: '+IntToStr(scores);
+  //Scores einstellen Spieler 2
+      var_scores := var_scores + l * 10;
+      if (var_scores >= 300)  and (var_scores < 1000)  then setspeed(2);
+      if (var_scores >= 1000) and (var_scores < 3000)  then setspeed(3);
+      if (var_scores >= 3000) and (var_scores < 10000) then setspeed(4);
+      if (var_scores >= 10000) then setspeed(5);
+      Form1.lblPlayer2Score.Caption := 'Score: '+IntToStr(var_scores);
     end;
   end;
 end;
@@ -681,12 +703,12 @@ begin
     19: begin
           if Timer1.Enabled then
           begin
-            Label3.Caption := 'Lol1!';
+            lblPause.Caption := 'Paused (P)';
             Timer1.Enabled := False;
           end
           else
           begin
-            Label3.Caption := '';
+            lblPause.Caption := '';
             Timer1.Enabled := True;
           end;
         end;
@@ -697,14 +719,68 @@ begin
     'A': if Timer1.Enabled and canmoveleft(True) then moveleft(True);
     'W': if Timer1.Enabled and canrotate(True) then rotatefigure(True);
     'D': if Timer1.Enabled and canmoveright(True) then moveright(True);
-    'S': if Timer1.Enabled and canmovedown(True) then movedown(True) else stopmove(True);   
+    'S': if Timer1.Enabled and canmovedown(True) then movedown(True) else stopmove(True);
+    'P': begin
+            if Timer1.Enabled then
+            begin
+              lblPause.Caption := 'Paused (P)';
+              Timer1.Enabled := False;
+              Timer2.Enabled := False;
+            end
+            else
+            begin
+              lblPause.Caption := '';
+              Timer1.Enabled := True;
+              Timer2.Enabled := True;
+            end;
+         end;
   end;
+
 end;
 
 procedure TForm1.FormResize(Sender: TObject);
 begin
   // fix "small window" bug
   Repaint;
+end;
+
+procedure TForm1.goSplashScreen;
+begin
+  splashFrm := TsplashFrm.Create(Self);
+  splashFrm.Show;
+  splashFrm.Update;
+  sleep(1000);
+  splashFrm.lblStart.Caption := '3';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '3.';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '3..';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '2';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '2.';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '2..';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '1';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '1.';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := '1..';
+  splashFrm.Update;
+  sleep(250);
+  splashFrm.lblStart.Caption := 'GO!';
+  splashFrm.Update;
+  Sleep(250);
+  splashFrm.Hide;
 end;
 
 procedure TForm1.mnuNewClick(Sender: TObject);
@@ -720,6 +796,22 @@ begin
   Timer1.Enabled := te;
 end;
 
+procedure TForm1.pnlSightBlockAlignPosition(Sender: TWinControl;
+  Control: TControl; var NewLeft, NewTop, NewWidth, NewHeight: Integer;
+  var AlignRect: TRect; AlignInfo: TAlignInfo);
+begin
+  if Control = pnlParentContainer then
+  begin
+    NewLeft := AlignRect.Left + ((AlignRect.Width - Control.Width) div 2);
+    NewTop := AlignRect.Top + ((AlignRect.Height - Control.Height) div 2);
+  end;
+end;
+
+procedure TForm1.scrlbrSQRSChange(Sender: TObject);
+begin
+ //test
+end;
+
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
   if canmovedown then movedown else stopmove;
@@ -728,6 +820,13 @@ end;
 procedure TForm1.Timer2Timer(Sender: TObject);
 begin
   if canmovedown(True) then movedown(True) else stopmove(True);
+end;
+
+procedure TForm1.tmrButtonTimer(Sender: TObject);
+begin
+  tmrButton.Enabled := False;
+  ToolButton2.Enabled := True;
+  ToolButton3.Enabled := True;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -747,7 +846,7 @@ begin
   imgFirst.Left := 2;
   imgFirst.Width := stkw * sqrs;
   imgFirst.Height := stkh * sqrs;
-  pnlFirst.Top := 5;
+  pnlFirst.Top := 25;
   pnlFirst.Left := 5;
   pnlFirst.Width := imgFirst.Width + 4;
   pnlFirst.Height := imgFirst.Height + 4;
@@ -757,7 +856,7 @@ begin
   imgNextFigure.Left := 2;
   imgNextFigure.Width := sqrs * 4;
   imgNextFigure.Height := imgNextFigure.Width;
-  pnlNextFigure.Top := 5;
+  pnlNextFigure.Top := 25;
   pnlNextFigure.Left := pnlFirst.Left + pnlFirst.Width + 10;
   pnlNextFigure.Width := imgNextFigure.Width + 4;
   pnlNextFigure.Height := pnlNextFigure.Width;
@@ -772,18 +871,33 @@ begin
   //cant see buggy entities at start
   pnlSightBlock.Visible := True;
   pnlSightBlock.Align := alClient;
-  // TODO: put buttons for customization on the panel
+
+  //test labels
+  lblCustomize.Caption := 'Customize your field size';
+  lblCustomize.Left := (lblCustomize.Width - lblCustomize.Width) div 2;
+  lblCustomize.top := (lblCustomize.Height-lblCustomize.Height) div 2;
 end;
 
 procedure TForm1.initStartPanel;
 begin
-  Label1.Visible := True;
-  Label2.Visible := True;
+  lblPlayer1Score.Visible := True;
+  lblPlayer1Level.Visible := True;
+  lblPlayer2Score.Visible := True;
+  lblPlayer2Level.Visible := True;
+  lblPlayer1Name.Visible := True;
+  lblPlayer2Name.Visible := True;
   pnlSightBlock.Visible := False;
 end;
 
 procedure TForm1.Action1Execute(Sender: TObject);
+var
+i: Integer;
+splashFrm: TsplashFrm;
 begin
+  ToolButton2.Enabled := False;
+  tmrButton.Enabled := True;
+  // cant press button more times
+  //goSplashScreen; //test aus
   initStartPanel;
   //einspielermod
   Form1.Width :=  pnlNextFigure.Left + pnlNextFigure.Width + 15;
@@ -795,18 +909,22 @@ end;
 
 procedure TForm1.Action2Execute(Sender: TObject);
 begin
+  ToolButton3.Enabled := False;
+  tmrButton.Enabled := True;
+  // cant press button more times
+  //goSplashScreen;   //test aus
   initStartPanel;
   //panels sichtbar
   pnlNextFigureSecond.Visible := True;
   pnlSecond.Visible := True;
   // fuer zwei Spieler
-  Form1.Width := pnlNextFigure.Left + pnlNextFigure.Width + 15 + pnlFirst.Width + 7;
+  Form1.Width := pnlNextFigure.Left + pnlNextFigure.Width + 15 + pnlFirst.Width + 14;
     //Tetris Zwei
   imgSecond.Top := 2;
   imgSecond.Left := 2;
   imgSecond.Width := stkw * sqrs;
   imgSecond.Height := stkh * sqrs;
-  pnlSecond.Top := 5;
+  pnlSecond.Top := 25;
   pnlSecond.Left :=  pnlNextFigure.Left + 135;
   pnlSecond.Width := imgSecond.Width + 4;
   pnlSecond.Height := imgSecond.Height + 4;
@@ -816,7 +934,7 @@ begin
   imgNextFigureSecond.Left := 2;
   imgNextFigureSecond.Width := sqrs * 4;
   imgNextFigureSecond.Height := imgNextFigureSecond.Width;
-  pnlNextFigureSecond.Top := 380; //gecheated lol   480
+  pnlNextFigureSecond.Top := 250; //gecheated lol
   pnlNextFigureSecond.Left := pnlFirst.Left + pnlFirst.Width + 10;
   pnlNextFigureSecond.Width := imgNextFigure.Width + 4;
   pnlNextFigureSecond.Height := pnlNextFigure.Width;
@@ -830,5 +948,6 @@ procedure TForm1.mnuExitClick(Sender: TObject);
 begin
   Close;
 end;
-
+// TODO
+//2 BUTTONS MIT CUSTOMIZE    // vll
 end.

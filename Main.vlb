@@ -1,14 +1,5 @@
-﻿[Label3]
-Coordinates=337,1,53,58
-
-[pnlFirst]
+﻿[pnlFirst]
 Coordinates=337,155,57,58
-
-[Label1]
-Coordinates=219,173,53,58
-
-[Label2]
-Coordinates=278,173,53,58
 
 [pnlSecond]
 Coordinates=142,77,75,58
@@ -46,4 +37,10 @@ Coordinates=454,56,84,36
 
 [ToolButton3]
 Coordinates=454,111,84,36
+
+[lblPlayer1Score]
+Coordinates=219,173,53,58
+
+[lblPlayer1Level]
+Coordinates=278,173,53,58
 

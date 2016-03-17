@@ -1,0 +1,38 @@
+unit ClassArray;
+
+interface
+
+uses
+ SysUtils;
+
+{$pointermath on}
+
+type
+  TMyArray = record
+  private
+    FData: array of array of integer;
+  public
+    class function New(Size1, Size2: cardinal): TMyArray; static;
+    property Item[x, y: integer]: integer read GetItem write SetItem default;
+  end;
+implementation
+
+{ TArrayClass }
+
+function TMyArray.GetItem(x,y: integer): integer;
+begin
+  Inc(x,3); Dec(y,1);
+  Result := Item[x, y];
+end;
+
+procedure TMyArray.SetItem(x,y: Integer);
+begin
+  Inc(x,3); Dec(y,1);
+
+
+end;
+
+
+
+
+end.
