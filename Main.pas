@@ -55,7 +55,7 @@ type
     procedure mnuExitClick(Sender: TObject);
     procedure Action1Execute(Sender: TObject);
     procedure Action2Execute(Sender: TObject);
-    procedure initStartPanel;
+    procedure initStartPanel(aSecond: Boolean = False);
     procedure FormResize(Sender: TObject);
     procedure pnlSightBlockAlignPosition(Sender: TWinControl; Control: TControl;
       var NewLeft, NewTop, NewWidth, NewHeight: Integer; var AlignRect: TRect;
@@ -187,12 +187,12 @@ procedure setspeed(s : Integer; aSecond: Boolean = False);
 begin
   if aSecond then
   begin
-    Form1.lblPlayer2Level.Caption := 'Level  : ' + IntToStr(s);
+    Form1.lblPlayer2Level.Caption := 'Level: ' + IntToStr(s);
     Form1.Timer2.Interval := 500 - (s-1) * 100; //game-speed
   end
   else
   begin
-    Form1.lblPlayer1Level.Caption := 'Level  : ' + IntToStr(s);
+    Form1.lblPlayer1Level.Caption := 'Level: ' + IntToStr(s);
     Form1.Timer1.Interval := 500 - (s-1) * 100;
   end;
 end;
@@ -878,14 +878,23 @@ begin
   lblCustomize.top := (lblCustomize.Height-lblCustomize.Height) div 2;
 end;
 
-procedure TForm1.initStartPanel;
+procedure TForm1.initStartPanel(aSecond: Boolean = False);
 begin
   lblPlayer1Score.Visible := True;
   lblPlayer1Level.Visible := True;
-  lblPlayer2Score.Visible := True;
-  lblPlayer2Level.Visible := True;
   lblPlayer1Name.Visible := True;
-  lblPlayer2Name.Visible := True;
+  if (aSecond) then
+  begin
+    lblPlayer2Score.Visible := True;
+    lblPlayer2Level.Visible := True;
+    lblPlayer2Name.Visible := True;
+  end
+  else
+  begin
+    lblPlayer2Score.Visible := False;
+    lblPlayer2Level.Visible := False;
+    lblPlayer2Name.Visible := False;
+  end;
   pnlSightBlock.Visible := False;
 end;
 
@@ -913,7 +922,7 @@ begin
   tmrButton.Enabled := True;
   // cant press button more times
   //goSplashScreen;   //test aus
-  initStartPanel;
+  initStartPanel(True);
   //panels sichtbar
   pnlNextFigureSecond.Visible := True;
   pnlSecond.Visible := True;
