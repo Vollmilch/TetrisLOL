@@ -62,7 +62,7 @@ type
       AlignInfo: TAlignInfo);
     procedure scrlbrSQRSChange(Sender: TObject);
     procedure goSplashScreen;
-    procedure goEndScreen;
+    procedure goEndScreen(p1 : Boolean);
 
       private
     { Private declarations }
@@ -518,18 +518,32 @@ begin
        end;
 end;
 
-function gameover : Boolean;
+function gameoverPl1 : Boolean;
 var
   i : Integer;
 begin
   Result := False;
   for i := 1 to stkw do
-    if ( (stakan[0,i]>0) or (var_stakan[0,i]>0))then
+    if ( stakan[0,i]>0 ) then
     begin
       Result := True;
       Exit;
     end;
 end;
+
+function gameoverPl2 : Boolean;
+var
+  i : Integer;
+begin
+  Result := False;
+  for i := 1 to stkw do
+    if (var_stakan[0,i]>0) then
+    begin
+      Result := True;
+      Exit;
+    end;
+end;
+
 
 procedure checkstakan(aSecond: Boolean = True);
 var i,j,k,l,c : Integer;
@@ -627,7 +641,7 @@ begin
     checkstakan;
   end;
 
-  if not gameover then
+  if  ( (not gameoverPl1) and (not gameoverPl2) ) then
   begin
     if aSecond then
     begin
@@ -642,14 +656,18 @@ begin
   end
   else
   begin
-    if aSecond then
-    begin
-      Form1.Timer2.Enabled := False;
-    end;
-
+    Form1.Timer2.Enabled := False;
     Form1.Timer1.Enabled := False;
 
-    // MEssage GameOver TODO+:
+    if gameoverPl1 then
+    begin
+      Form1.goEndScreen(True);
+    end
+    else
+    if gameoverPl2 then
+    begin
+      Form1.goEndScreen(False);
+    end;
   end;
 end;
 
@@ -688,7 +706,7 @@ end;
 procedure TForm1.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if not gameover then
+  if ( (not gameoverPl1) and (not gameoverPl2)) then
   case key of
     37: if Timer1.Enabled and canmoveleft then moveleft;
     38: if Timer1.Enabled and canrotate then rotatefigure;
@@ -715,6 +733,7 @@ begin
   end;
 
   //second Player Controls
+  if ( (not gameoverPl1) and (not gameoverPl2)) then
   case Char(Key) of
     'A': if Timer1.Enabled and canmoveleft(True) then moveleft(True);
     'W': if Timer1.Enabled and canrotate(True) then rotatefigure(True);
@@ -742,17 +761,23 @@ procedure TForm1.FormResize(Sender: TObject);
 begin
   // fix "small window" bug
   Repaint;
+  Form1.Invalidate;
 end;
 
-procedure TForm1.goEndScreen;
+procedure TForm1.goEndScreen(p1: boolean);
 begin
   splashFrm := TsplashFrm.Create(Self);
   splashFrm.Show;
+
+  if (p1) then
+  begin
+    splashFrm.lblStart.Caption := 'Player 1 lost :(';
+  end
+  else
+    splashFrm.lblStart.Caption := 'Player 2 lost :(';
+
   splashFrm.Update;
-  sleep(1000);
-  splashFrm.lblStart.Caption := 'GAME OVER';
-  splashFrm.Update;
-  Sleep(250);
+  Sleep(1000);
   splashFrm.Hide;
 end;
 
@@ -845,6 +870,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var mh : String;
 begin
   {HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics, MenuHeight}
+  ReportMemoryLeaksOnShutdown := True;
 
   reg := TRegistry.Create;
   reg.RootKey := HKEY_CURRENT_USER;
@@ -895,6 +921,7 @@ begin
   lblPlayer1Score.Visible := True;
   lblPlayer1Level.Visible := True;
   lblPlayer1Name.Visible := True;
+
   if (aSecond) then
   begin
     lblPlayer2Score.Visible := True;
