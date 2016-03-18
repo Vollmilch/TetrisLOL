@@ -62,6 +62,7 @@ type
       AlignInfo: TAlignInfo);
     procedure scrlbrSQRSChange(Sender: TObject);
     procedure goSplashScreen;
+    procedure goEndScreen;
 
       private
     { Private declarations }
@@ -648,7 +649,6 @@ begin
 
     Form1.Timer1.Enabled := False;
 
-    //Application.MessageBox(PChar('Game Over'),PChar('Over'), MB_ICONINFORMATION+MB_OK);
     // MEssage GameOver TODO+:
   end;
 end;
@@ -742,6 +742,18 @@ procedure TForm1.FormResize(Sender: TObject);
 begin
   // fix "small window" bug
   Repaint;
+end;
+
+procedure TForm1.goEndScreen;
+begin
+  splashFrm := TsplashFrm.Create(Self);
+  splashFrm.Show;
+  splashFrm.Update;
+  sleep(1000);
+  splashFrm.lblStart.Caption := 'GAME OVER';
+  splashFrm.Update;
+  Sleep(250);
+  splashFrm.Hide;
 end;
 
 procedure TForm1.goSplashScreen;
@@ -906,7 +918,7 @@ begin
   ToolButton2.Enabled := False;
   tmrButton.Enabled := True;
   // cant press button more times
-  //goSplashScreen; //test aus
+  goSplashScreen; //test aus
   initStartPanel;
   //einspielermod
   Form1.Width :=  pnlNextFigure.Left + pnlNextFigure.Width + 15;
@@ -921,7 +933,7 @@ begin
   ToolButton3.Enabled := False;
   tmrButton.Enabled := True;
   // cant press button more times
-  //goSplashScreen;   //test aus
+  goSplashScreen;   //test aus
   initStartPanel(True);
   //panels sichtbar
   pnlNextFigureSecond.Visible := True;

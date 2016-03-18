@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.439,=D:\ISHODNIKI\tetrislol\Unit1.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.824,D:\ISHODNIKI\tetrislol\Unit1.pas=D:\ISHODNIKI\tetrislol\TTetromino.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.434,D:\ISHODNIKI\tetrislol\TTetromino.pas=</Transaction>
     <Transaction>1899.12.30 00:00:00.000.891,D:\ISHODNIKI\tetris2002\About.pas=</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.439,=D:\ISHODNIKI\tetrislol\Unit1.pas</Transaction>
+    <Transaction>2016.03.17 21:20:21.105,=D:\GitHubTetris\TetrisLOL\Unit1.pas</Transaction>
+    <Transaction>2016.03.17 21:20:40.065,D:\GitHubTetris\TetrisLOL\ClassArray.pas=D:\GitHubTetris\TetrisLOL\Unit1.pas</Transaction>
+    <Transaction>2016.03.17 22:19:24.825,=D:\GitHubTetris\TetrisLOL\Unit2.pas</Transaction>
+    <Transaction>2016.03.17 22:19:35.903,D:\GitHubTetris\TetrisLOL\splash.pas=D:\GitHubTetris\TetrisLOL\Unit2.pas</Transaction>
+    <Transaction>2016.03.17 22:19:35.903,D:\GitHubTetris\TetrisLOL\splash.dfm=D:\GitHubTetris\TetrisLOL\Unit2.dfm</Transaction>
   </Transactions>
 </BorlandProject>
