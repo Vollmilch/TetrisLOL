@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   Menus, ExtCtrls, StdCtrls, Registry, Vcl.ImgList, Vcl.ToolWin, Vcl.ComCtrls,
   System.Actions, Vcl.ActnList, Vcl.StdActns, System.Generics.Collections
-  , splash;
+  , splash, ClassArray;
 
 type
   TForm1 = class(TForm)
@@ -147,9 +147,6 @@ const
    ((1,1,0,0),(0,0,0,0),(0,0,0,0),(0,0,0,0))
    )
   );
-
-//  colors : Array [1..12] of Integer = (clAqua, clBlue, clFuchsia, clGreen,
-//  clLime, clMaroon, clNavy, clOlive, clPurple, clRed, clTeal, clYellow);     //(clWebLemonChiffon, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
 
   colors : Array [1..12] of Integer = (clWebLightSkyBlue, clWebRoyalBlue, clWebOrchid, clWebLimeGreen,
   clWebLavender, clWebIndianRed, clWebMidnightBlue, clWebOliveDrab, clWebBlueViolet, clWebTomato, clWebDarkCyan, clWebGold);
@@ -713,22 +710,15 @@ begin
     39: if Timer1.Enabled and canmoveright then moveright;
     40: if Timer1.Enabled and canmovedown then movedown else stopmove;
     {49..53: setspeed(Key - 48);}
-    32: if Timer1.Enabled then
+    VK_NUMPAD0: if Timer1.Enabled then
         begin
           while canmovedown do movedown;
           stopmove;
         end;
-    19: begin
-          if Timer1.Enabled then
-          begin
-            lblPause.Caption := 'Paused (P)';
-            Timer1.Enabled := False;
-          end
-          else
-          begin
-            lblPause.Caption := '';
-            Timer1.Enabled := True;
-          end;
+    32: if Timer2.Enabled then
+        begin
+          while canmovedown(True) do movedown(True);
+          stopmove(True);
         end;
   end;
 
@@ -754,7 +744,6 @@ begin
             end;
          end;
   end;
-
 end;
 
 procedure TForm1.FormResize(Sender: TObject);
@@ -997,5 +986,5 @@ begin
   Close;
 end;
 // TODO
-//2 BUTTONS MIT CUSTOMIZE    // vll
+//2 BUTTONS MIT CUSTOMIZE    //
 end.
