@@ -46,6 +46,7 @@ type
     lblPlayer2Score: TLabel;
     lblPlayer2Level: TLabel;
     lblPlayer2Name: TLabel;
+    procedure mnuNewClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Timer2Timer(Sender: TObject);
     procedure tmrButtonTimer(Sender: TObject);
@@ -715,7 +716,7 @@ begin
           while canmovedown do movedown;
           stopmove;
         end;
-     32: if Timer2.Enabled then
+     32: if Timer1.Enabled then
         begin
           while canmovedown(True) do movedown(True);
           stopmove(True);
@@ -807,6 +808,19 @@ begin
   splashFrm.Update;
   Sleep(250);
   splashFrm.Hide;
+end;
+
+procedure TForm1.mnuNewClick(Sender: TObject);
+var te : Boolean;
+begin
+  te := Timer1.Enabled;
+  if te then Timer1.Enabled := False;
+  if Application.MessageBox(PChar('New Game?'),
+     PChar('noob'), MB_ICONQUESTION+MB_YESNO) = IDYES
+  then
+    newgame(True)
+  else
+  Timer2.Enabled := te;
 end;
 
 procedure TForm1.pnlSightBlockAlignPosition(Sender: TWinControl;

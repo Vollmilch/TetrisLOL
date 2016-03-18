@@ -22,7 +22,7 @@ object Form1: TForm1
   TextHeight = 13
   object lblPlayer1Score: TLabel
     Left = 320
-    Top = 170
+    Top = 175
     Width = 67
     Height = 19
     Caption = 'Caption 1'
@@ -36,9 +36,10 @@ object Form1: TForm1
   end
   object lblPlayer1Level: TLabel
     Left = 320
-    Top = 190
+    Top = 195
     Width = 69
     Height = 19
+    Margins.Top = 8
     Caption = 'Caption 2'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -50,7 +51,7 @@ object Form1: TForm1
   end
   object lblPause: TLabel
     Left = 320
-    Top = 210
+    Top = 498
     Width = 4
     Height = 19
     Font.Charset = ANSI_CHARSET
@@ -62,10 +63,10 @@ object Form1: TForm1
   end
   object lblPlayer1Name: TLabel
     Left = 320
-    Top = 150
-    Width = 86
+    Top = 155
+    Width = 57
     Height = 19
-    Caption = 'PlayerName'
+    Caption = 'Player 1'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
@@ -73,11 +74,10 @@ object Form1: TForm1
     Font.Style = [fsBold]
     ParentFont = False
     Visible = False
-    OnClick = lblPlayer1NameClick
   end
   object lblPlayer2Score: TLabel
     Left = 320
-    Top = 387
+    Top = 400
     Width = 67
     Height = 19
     Caption = 'Caption 1'
@@ -91,9 +91,10 @@ object Form1: TForm1
   end
   object lblPlayer2Level: TLabel
     Left = 320
-    Top = 407
+    Top = 420
     Width = 69
     Height = 19
+    Margins.Top = 8
     Caption = 'Caption 2'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -105,10 +106,10 @@ object Form1: TForm1
   end
   object lblPlayer2Name: TLabel
     Left = 320
-    Top = 367
-    Width = 86
+    Top = 380
+    Width = 59
     Height = 19
-    Caption = 'PlayerName'
+    Caption = 'Player 2'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -15
@@ -321,12 +322,14 @@ object Form1: TForm1
     end
   end
   object Timer1: TTimer
+    Enabled = False
     Interval = 500
     OnTimer = Timer1Timer
     Left = 136
     Top = 312
   end
   object Timer2: TTimer
+    Enabled = False
     Interval = 500
     OnTimer = Timer2Timer
     Left = 136
@@ -357,7 +360,7 @@ object Form1: TForm1
     Left = 88
     Top = 352
     Bitmap = {
-      494C0101030008004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103000800580010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000008686860086868600868686008686
       8600868686008686860086868600868686008686860086868600FFFFFF00C0C0

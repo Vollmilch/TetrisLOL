@@ -14,7 +14,7 @@ type
     FSizeX, FSizeY: cardinal; //The size of the array.
   public
     class function New(Size1, Size2: cardinal): TMyArray; static;
-    function GetItem(x,y: Integer): Integer;
+    function GetItem(x,y: Integer): TMyArray;
     procedure SetItem(x,y,Value: Integer);
     //property Item[x, y: integer]: integer read GetItem write SetItem default;
   end;
@@ -23,10 +23,10 @@ implementation
 
 { TArrayClass }
 
-function TMyArray.GetItem(x,y: integer): integer;
+function TMyArray.GetItem(x,y: integer): TMyArray;
 begin
   Inc(x,3); Dec(y,1);
-  Result := FData[x+y*FSizeX];
+  // := Result.FData[x+y*FSizeX];
 end;
 
 class function TMyArray.New(Size1, Size2: cardinal): TMyArray;
