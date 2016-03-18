@@ -10,7 +10,8 @@ uses
 type
   TMyArray = record
   private
-    FData: array of integer;
+    FData: PInteger;
+    FSizeX, FSizeY: cardinal; //The size of the array.
   public
     class function New(Size1, Size2: cardinal): TMyArray; static;
     function GetItem(x,y: Integer): Integer;
@@ -25,12 +26,12 @@ implementation
 function TMyArray.GetItem(x,y: integer): integer;
 begin
   Inc(x,3); Dec(y,1);
-  Result := FData[x+y];
+  Result := FData[x+y*FSizeX];
 end;
 
 class function TMyArray.New(Size1, Size2: cardinal): TMyArray;
 begin
-  //SetLength(FData, Size1 * Size2);
+  //SetLength(Result.FData, FSizeX*FSizeY)
 end;
 
 procedure TMyArray.SetItem(x,y: Integer; Value: Integer);

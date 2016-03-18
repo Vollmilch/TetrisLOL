@@ -715,6 +715,7 @@ begin
           while canmovedown do movedown;
           stopmove;
         end;
+
     32: if Timer2.Enabled then
         begin
           while canmovedown(True) do movedown(True);
